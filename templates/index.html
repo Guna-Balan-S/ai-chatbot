@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
     <!-- PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
 <style>
 /* ===================== GLOBAL ===================== */
@@ -351,6 +351,26 @@ function loadChat(id) {
     renderMessages();
 }
 
+function exportPDF() {
+
+    const element = document.getElementById("chat-box");
+
+    if (!element || element.innerHTML.trim() === "") {
+        alert("No chat to export!");
+        return;
+    }
+
+    const opt = {
+        margin: 10,
+        filename: 'chat-export.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+}
+    
 function renderMessages() {
     const box = document.getElementById("chat-box");
     box.innerHTML = "";
